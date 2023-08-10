@@ -3,6 +3,8 @@ package com.coda.echoserver.component;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +27,7 @@ public class RegisterPodComponent {
 
     private  boolean retryRegistration = false;
 
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void runAfterStartup() {
         restTemplate = new RestTemplate();
         retryRegistration = this.registerPod();
@@ -38,20 +40,21 @@ public class RegisterPodComponent {
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        String url = "http://localhost:8888/registerPod";
+        String url = "http://localhost:8888/v1/registerPod";
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
                                 .queryParam("hostName","http://localhost")
-                                .queryParam("port",externalServerPort).build();
+                                .queryParam("port", externalServerPort).build();
 
         try{
 
-            ResponseEntity<?> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity ,String.class);
+            ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity ,String.class);
             if (!response.getStatusCode().equals(HttpStatus.OK)) {
                 log.error("Error communicate with routing server");
                 return  true;
             }
         } catch (Exception e) {
             log.error("Error communicate with routing server");
+            e.printStackTrace();
            return true;
         }
 

@@ -11,6 +11,4 @@ public class EchoServerApplication {
 		SpringApplication.run(EchoServerApplication.class, args);
 	}
 
-
-
 }
