@@ -21,9 +21,9 @@ Run the following commands to provides instructions to point your terminal’s d
 
 ### Method 1 
 2. docker build . -t echoserver
-3. docker run -d -p 8080:8080 -t echoserver --rm -it echoserver1
-3. docker run -d -p 8081:8080 -t echoserver --rm -it echoserver2
-3. docker run -d -p 8082:8080 -t echoserver --rm -it echoserver3
+3. docker run -d -e JAVA_SERVER_PORT=8081 -p 8081:8080 -t echoserver --rm -it echoserver1
+3. docker run -d  -e JAVA_SERVER_PORT=8082 -p 8082:8080 -t echoserver --rm -it echoserver2
+3. docker run -d  -e JAVA_SERVER_PORT=8083 -p 8083:8080 -t echoserver --rm -it echoserver3
 
 ### Method 2
 To run with kubernetes with 3 replicas: 
