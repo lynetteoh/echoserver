@@ -1,6 +1,5 @@
 package com.coda.echoserver.component;
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -40,7 +39,7 @@ public class RegisterPodComponent {
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        String url = "http://localhost:8888/v1/registerPod";
+        String url = "http://host.docker.internal:8888/v1/registerPod";
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
                                 .queryParam("hostName","http://localhost")
                                 .queryParam("port", externalServerPort).build();
