@@ -32,10 +32,12 @@ public class RegisterPodComponent {
         retryRegistration = this.registerPod();
     }
 
+
+    // tell load balancer our url and port
     public boolean registerPod() {
         String externalServerPort = environment.getProperty("JAVA_SERVER_PORT");
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", "application/json");
+        headers.set("Accept", "*/*");
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
@@ -46,6 +48,7 @@ public class RegisterPodComponent {
 
         try{
 
+            // send request to load balancer
             ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity ,String.class);
             if (!response.getStatusCode().equals(HttpStatus.OK)) {
                 log.error("Error communicate with routing server");
@@ -63,7 +66,7 @@ public class RegisterPodComponent {
 
     @Scheduled(cron = "*/10 * * * * *")
     public void onSchedule() {
-        // retry to register pod with routing server
+        // retry register pod with load balancer if previous attempt failed
         if (retryRegistration) {
             retryRegistration = this.registerPod();
         }
