@@ -1,11 +1,7 @@
-#Echo Server
 
-
-## Description
-This is a spring boot application that has a /echo endpoint that will return whatever json that is it receives. 
 
 ## Pre-requisites 
-1.Docker 
+1. Docker 
 2. Kubectl
 3. Minikube
 
@@ -38,8 +34,17 @@ To run with kubernetes with 3 replicas:
 9. kubectl get pods
 10. kubectl expose deployment echo server --port=8080  --name=echoserver-service --type=LoadBalancer
 11. minikube service echoserver --url
+
+Remarks: 
 **todo: find a way to get ip and port of each pod in the cluster for routing api
     
+Things to improve: 
+1. find a way to get ip and port of each pod in the cluster for routing api
+2. implement apikey to ignore unauthorized request 
+3. implement system monitoring to keep track of request per minute and application health 
+
+
+
 ## Path
 http://localhost:<port>/swagger-ui/index.html
 http://localhost:<port>/actuator/health

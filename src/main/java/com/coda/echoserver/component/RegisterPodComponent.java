@@ -41,7 +41,7 @@ public class RegisterPodComponent {
 
         String url = "http://host.docker.internal:8888/v1/registerPod";
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
-                                .queryParam("hostName","http://localhost")
+                                .queryParam("hostName","http://host.docker.internal")
                                 .queryParam("port", externalServerPort).build();
 
         try{
