@@ -48,3 +48,5 @@ Things to improve:
 ## Path
 http://localhost:<port>/swagger-ui/index.html
 http://localhost:<port>/actuator/health
+
+Time taken to complete: 5 hours 
